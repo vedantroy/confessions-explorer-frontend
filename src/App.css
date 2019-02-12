@@ -1,0 +1,50 @@
+@import '~antd/dist/antd.css';
+/*TODO: make this better*/
+/*
+@import url(//db.onlinewebfonts.com/c/f3df85918e3f1ba8a7b13be9b47882ce?family=Avenir+Next);
+*/
+/* BOLD AVENIR NEXT */
+@font-face {font-family: "Avenir Next";
+    src: url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.eot");
+    src: url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.svg#Avenir Next") format("svg");
+}
+
+/* REGULAR DIN */
+@font-face {font-family: "DIN";
+    src: url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.eot");
+    src: url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.svg#DIN") format("svg");
+}
+
+
+/*
+    Manually Override CSS in components either by
+    1. redefining existing classes
+    2. adding new classes to brute-force change CSS
+*/
+
+/* New Class -- styles MaterialIcon Component */
+.bottom-align {
+    vertical-align: bottom;
+    color: rgba(0, 0, 0, 0.65);
+}
+
+/* Restyles Ant Design Date Range Picker */
+.ant-calendar-picker-input.ant-input {
+    border: none;
+    box-shadow: 0 2px 8px rgba(50, 60, 80, 0.15);
+    transition: box-shadow 0.3s;
+    height: 33px;
+    font-family: DIN;
+}
+
+.ant-calendar-picker-input.ant-input:hover {
+    box-shadow: 0 2px 8px rgba(90, 46, 255, 0.25)
+}
