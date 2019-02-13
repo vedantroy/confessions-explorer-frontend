@@ -14,15 +14,6 @@ class PostFeed extends Component {
         confessions: []
     }
 
-    generateArray(n) {
-        let arr = []
-        for (let i = 0; i < n; i++) {
-            arr[i] = i
-        }
-        return arr
-    }
-
-    //Load data
     componentDidMount() {
         this.appendNextPosts()
     }
@@ -43,7 +34,7 @@ class PostFeed extends Component {
     async appendNextPosts() {
         console.log("index: " + this.index)
         this.isLoading = true
-        const url = new URL("http://localhost:3001/small")
+        const url = new URL("http://ec2-3-82-161-154.compute-1.amazonaws.com:3001/confessions")
         url.search = new URLSearchParams({ ...this.props.queryParams, index: this.index })
 
         const confessions = await fetch(url)
