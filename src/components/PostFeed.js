@@ -34,7 +34,7 @@ class PostFeed extends Component {
     async appendNextPosts() {
         console.log("index: " + this.index)
         this.isLoading = true
-        const url = new URL("http://ec2-3-82-161-154.compute-1.amazonaws.com:3001/confessions")
+        const url = new URL("https://api.confs.app/confessions")
         url.search = new URLSearchParams({ ...this.props.queryParams, index: this.index })
 
         const confessions = await fetch(url)
