@@ -1,9 +1,9 @@
-@import '~antd/dist/antd.css';
-/*TODO: make this better*/
 /*
 @import url(//db.onlinewebfonts.com/c/f3df85918e3f1ba8a7b13be9b47882ce?family=Avenir+Next);
 */
 /* BOLD AVENIR NEXT */
+@import url(//db.onlinewebfonts.com/c/bf69b9412d90c2a017d27cf7fe6f6c67?family=Avenir+Next);
+/*
 @font-face {font-family: "Avenir Next";
     src: url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.eot");
     src: url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.eot?#iefix") format("embedded-opentype"),
@@ -12,8 +12,11 @@
     url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.ttf") format("truetype"),
     url("//db.onlinewebfonts.com/t/bf69b9412d90c2a017d27cf7fe6f6c67.svg#Avenir Next") format("svg");
 }
+*/
 
 /* REGULAR DIN */
+@import url(//db.onlinewebfonts.com/c/e934b630586ca9b7fe66c99ac1592f4a?family=DIN);
+/*
 @font-face {font-family: "DIN";
     src: url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.eot");
     src: url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.eot?#iefix") format("embedded-opentype"),
@@ -22,6 +25,7 @@
     url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.ttf") format("truetype"),
     url("//db.onlinewebfonts.com/t/e934b630586ca9b7fe66c99ac1592f4a.svg#DIN") format("svg");
 }
+*/
 
 
 /*

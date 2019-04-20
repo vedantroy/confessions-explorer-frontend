@@ -4,22 +4,31 @@
   "private": true,
   "dependencies": {
     "antd": "^3.14.1",
+    "babel-plugin-import": "^1.11.0",
+    "customize-cra": "^0.2.12",
     "downshift": "^3.2.6",
     "material-icons-react": "^1.0.4",
     "react": "^16.8.3",
+    "react-app-rewired": "^2.1.0",
     "react-dom": "^16.8.3",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^2.1.5",
     "styled-components": "^4.1.3"
   },
   "scripts": {
-    "analyze": "source-map-explorer build/static/js/main.*",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "analyze": "webpack-bundle-analyzer build/bundle-stats.json build/static/js",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build --stats",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "homepage": ".",
   "devDependencies": {
-    "source-map-explorer": "^1.7.0"
-  }
+    "webpack-bundle-analyzer": "^3.1.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

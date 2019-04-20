@@ -32,9 +32,9 @@ class PostFeed extends Component {
     }
 
     async appendNextPosts() {
-        console.log("index: " + this.index)
         this.isLoading = true
         const url = new URL("https://api.confs.app/confessions")
+        //const url = new URL('http://localhost:3000/confessions')
         url.search = new URLSearchParams({ ...this.props.queryParams, index: this.index })
 
         const confessions = await fetch(url)
@@ -44,25 +44,13 @@ class PostFeed extends Component {
                 console.log(error)
             })
 
-        //Case: Errors
-
         //Server sends confessions in batches of 10. If the batch is less than 10,
         //the server is out
-        confessions.map(confession => confession.timestamp = moment.unix(confession.timestamp).format("MM-DD-YYYY"))
+        confessions.map(confession => confession.time = moment.unix(confession.time).format("MM-DD-YYYY"))
         if (confessions.length < 10) {
             this.hasMore = false
         }
         this.index += 1
-
-        /*
-        this.state.confessions.map(existingConf => {
-            confessions.map(newConf => {
-                if (newConf.facebook_id === existingConf.facebook_id) {
-                    console.log("WARNING: " + newConf.facebook_id)
-                }
-            })
-        })
-        */
 
         this.isLoading = false
         this.setState(prevState => ({
@@ -76,8 +64,6 @@ class PostFeed extends Component {
                 } else {
                     this.isLoading = false
                 }
-            } else {
-                this.isLoading = false
             }
         })
     }
@@ -98,12 +84,12 @@ class PostFeed extends Component {
                 {
                     this.state.confessions.map(confession => (
                         <Confession
-                            key={confession.facebook_id}
+                            key={confession.fb_id}
                             source={confession.group}
-                            date={confession.timestamp}
+                            date={confession.time}
                             reacts={confession.reacts.Total}
                             text={confession.text}
-                            confessionId={confession.facebook_id} />
+                            confessionId={confession.fb_id} />
                     ))
                 }
             </div>

@@ -1,23 +1,15 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { arraysDifferent } from "./utils/utils"
 import moment from "moment";
-import InfiniteScroll from "react-infinite-scroller"
 import "./App.css";
-import { Layout, Row, Col } from 'antd';
-import Confession from "./components/Confession";
+import { Row, Col, Slider, DatePicker } from 'antd';
 import styled from 'styled-components'
 import { avenirNext, Caption } from "./components/base/BaseComponents";
 import SourceSearch from "./components/menu/SourceSearch";
 import SourceDisplay from "./components/menu/SourceDisplay";
 import TextSearch from './components/menu/TextSearch'
 import PostFeed from "./components/PostFeed";
-import { Slider, DatePicker } from 'antd'
 const { RangePicker } = DatePicker
-
-
-const {
-  Header, Sider, Content,
-} = Layout;
 
 const SettingsHeader = styled.div`
   height: 64px;
@@ -45,7 +37,7 @@ const SettingsPanel = styled.div`
 
 export default class App extends Component {
 
-  defaultSuggestions = ["MIT Summer Confessions", "MIT Timely Confessions"]
+  defaultSuggestions = ["MIT Summer Confessions"]
   defaultSources = ["MIT Confessions"]
   defaultTextFilter = ""
   defaultMinReacts = 20
@@ -84,7 +76,6 @@ export default class App extends Component {
     })
   }
 
-  //Might be able to replace with ES6 getter
   get queryParams() {
     if (this.state === undefined) {
       return {
