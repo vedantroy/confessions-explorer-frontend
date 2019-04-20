@@ -9,6 +9,8 @@ import SourceSearch from "./components/menu/SourceSearch";
 import SourceDisplay from "./components/menu/SourceDisplay";
 import TextSearch from './components/menu/TextSearch'
 import PostFeed from "./components/PostFeed";
+import NameTypeSelector from "./components/menu/NameType";
+import NameSearch from "./components/menu/NameSearch";
 const { RangePicker } = DatePicker
 
 const SettingsHeader = styled.div`
@@ -42,6 +44,8 @@ export default class App extends Component {
   defaultTextFilter = ""
   defaultMinReacts = 20
   defaultTimeRange = [moment().subtract(2, "years"), moment()]
+  defaultCommented = true
+  defaultTagged = true
 
   state = {
     suggestions: this.defaultSuggestions,
@@ -49,25 +53,9 @@ export default class App extends Component {
     timeRange: this.defaultTimeRange,
     minReacts: this.defaultMinReacts,
     textFilter: this.defaultTextFilter,
-    queryParams: this.queryParams
-  }
-
-  DEBUG_compareState(state1, state2) {
-    if (state1.minReacts !== state2.minReacts) {
-      console.log("minReacts unequal")
-    }
-    if (arraysDifferent(state1.sources, state2.sources)) {
-      console.log("sources unequal")
-    }
-    if (arraysDifferent(state1.timeRange, state2.timeRange)) {
-      console.log("time range unequal")
-    }
-    if (state1.textFilter !== state2.textFilter) {
-      console.log("text filter unequal")
-    }
-    if (state1.queryParams !== state2.queryParams) {
-      console.log("query params unequal")
-    }
+    commented: this.defaultCommented,
+    tagged: this.defaultTagged,
+    //queryParams: this.queryParams
   }
 
   updateQueryParams() {
@@ -83,6 +71,8 @@ export default class App extends Component {
         timeRange: this.defaultTimeRange.map(date => date.valueOf()),
         minReacts: this.defaultMinReacts,
         textFilter: this.defaultTextFilter,
+        commented: this.defaultCommented,
+        tagged: this.defaultTagged
       }
     }
     return {
@@ -90,28 +80,12 @@ export default class App extends Component {
       timeRange: this.state.timeRange.map(date => date.valueOf()),
       minReacts: this.state.minReacts,
       textFilter: this.state.textFilter,
+      commented: this.state.commented,
+      tagged: this.state.tagged
     }
   }
 
   render() {
-    //TODO - implement basic caching
-    //TODO - in production, remove index b/c can just use FB Id for key
-    //TODO - this is SUPER SUPER SUPER slow because everytime a setting  is changed,
-    //this map function is called (often, hundreds of times)
-
-    /*
-    let listItems = this.state.confessions.map((confession, index) =>
-      (
-        < Confession
-          key={confession.fb_id}
-          source={confession.group}
-          date={confession.time}
-          reacts={confession.reacts.Total}
-          body={confession.text}
-          confessionId={confession.fb_id} />
-      )
-    )
-    */
 
     //Can syntax be simplified? E.g - { timeRange } instead of {timeRange: timeRange}?
     return (
@@ -121,7 +95,24 @@ export default class App extends Component {
             <SettingsHeader>Search</SettingsHeader>
             <SettingsPanel>
               <div>
-                <Caption>Text Search</Caption>
+                <Caption>Name</Caption>
+                <div>
+                  <NameSearch />
+                  <NameTypeSelector
+                    /* don't change the commented/tagged keys in the state object unless you also
+                    change the values that are passed into onChange in NameSearch */
+                    onChange={type => {
+                      this.setState({
+                        [type]: !this.state[type]
+                      }, () => {
+                        console.log(this.state[type])
+                      })
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <Caption>Included Text</Caption>
                 <TextSearch
                   onSubmit={value => {
                     this.setState({
@@ -177,22 +168,10 @@ export default class App extends Component {
         </Col>
         <Col span={14} style={{ height: "100%" }}>
           <PostFeed
-            queryParams={this.state.queryParams}
+            queryParams={{ sources, timeRange, minReacts, textFilter, commented, tagged }}
           />
         </Col>
-      </Row>
+      </Row >
     )
   }
 }
-
-/*
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={this.loadPosts.bind(this)}
-            hasMore={this.state.loadMorePosts}
-            loader={<div>Loading....</div>}
-            useWindow={true}
-          >
-            {listItems}
-          </InfiniteScroll>
-*/

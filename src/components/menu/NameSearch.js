@@ -1,8 +1,9 @@
 import React from 'react'
 import { ShadowSearchbox } from '../base/BaseComponents'
 
+export default class NameSearch extends React.Component {
 
-export default class TextSearch extends React.Component {
+
     render() {
         return (
             <ShadowSearchbox

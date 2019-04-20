@@ -44,13 +44,18 @@ export const DIN_FONT = css`
   font-family: "DIN";
 `
 
-export const Caption = styled.div`
-  align-self: flex-start;
+export const dinCSS = css`
   text-transform: uppercase;
   font-size: 11px;
-  margin-bottom: 5px;
   font-weight: 700;
   ${DIN_FONT}
+`
+
+export const Caption = styled.div`
+  align-self: flex-start;
+  ${dinCSS}
+  margin-bottom: 5px;
+
 `
 
 export const Column = styled.div`
@@ -81,4 +86,8 @@ export const StyledInput = styled.input`
     width: 100%;
     height: 33px;
     border-radius: 4px;
+`
+
+export const ShadowSearchbox = styled(StyledInput)`
+    ${menuShadow}
 `
