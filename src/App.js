@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { arraysDifferent } from "./utils/utils"
 import moment from "moment";
 import "./App.css";
 import { Row, Col, Slider, DatePicker } from 'antd';
@@ -39,50 +38,15 @@ const SettingsPanel = styled.div`
 
 export default class App extends Component {
 
-  defaultSuggestions = ["MIT Summer Confessions"]
-  defaultSources = ["MIT Confessions"]
-  defaultTextFilter = ""
-  defaultMinReacts = 20
-  defaultTimeRange = [moment().subtract(2, "years"), moment()]
-  defaultCommented = true
-  defaultTagged = true
-
   state = {
-    suggestions: this.defaultSuggestions,
-    sources: this.defaultSources,
-    timeRange: this.defaultTimeRange,
-    minReacts: this.defaultMinReacts,
-    textFilter: this.defaultTextFilter,
-    commented: this.defaultCommented,
-    tagged: this.defaultTagged,
-    //queryParams: this.queryParams
-  }
-
-  updateQueryParams() {
-    this.setState({
-      queryParams: this.queryParams
-    })
-  }
-
-  get queryParams() {
-    if (this.state === undefined) {
-      return {
-        sources: JSON.stringify(this.defaultSources),
-        timeRange: this.defaultTimeRange.map(date => date.valueOf()),
-        minReacts: this.defaultMinReacts,
-        textFilter: this.defaultTextFilter,
-        commented: this.defaultCommented,
-        tagged: this.defaultTagged
-      }
-    }
-    return {
-      sources: JSON.stringify(this.state.sources),
-      timeRange: this.state.timeRange.map(date => date.valueOf()),
-      minReacts: this.state.minReacts,
-      textFilter: this.state.textFilter,
-      commented: this.state.commented,
-      tagged: this.state.tagged
-    }
+    suggestions: ["MIT Summer Confessions"],
+    sources: ["MIT Confessions"],
+    timeRange: [moment().subtract(2, "years"), moment()],
+    minReacts: 20,
+    textFilter: "",
+    nameFilter: "",
+    commented: true,
+    tagged: true,
   }
 
   render() {
@@ -97,15 +61,17 @@ export default class App extends Component {
               <div>
                 <Caption>Name</Caption>
                 <div>
-                  <NameSearch />
+                  <NameSearch
+                    onSubmit={name => {
+                      this.setState({ nameFilter: name })
+                    }}
+                  />
                   <NameTypeSelector
                     /* don't change the commented/tagged keys in the state object unless you also
                     change the values that are passed into onChange in NameSearch */
                     onChange={type => {
                       this.setState({
                         [type]: !this.state[type]
-                      }, () => {
-                        console.log(this.state[type])
                       })
                     }}
                   />
@@ -117,7 +83,7 @@ export default class App extends Component {
                   onSubmit={value => {
                     this.setState({
                       textFilter: value
-                    }, this.updateQueryParams)
+                    })
                   }}
                 />
               </div>
@@ -129,7 +95,7 @@ export default class App extends Component {
                   this.setState({
                     suggestions: newSuggestions,
                     sources: newSources,
-                  }, this.updateQueryParams)
+                  })
                 }}
 
               />
@@ -139,15 +105,14 @@ export default class App extends Component {
                   this.setState({
                     suggestions: this.state.suggestions.concat(removedSource),
                     sources: this.state.sources.filter(source => source !== removedSource)
-                  }, this.updateQueryParams)
+                  })
                 }}
               />
               <div>
                 <Caption>Date Range</Caption>
                 <RangePicker
                   onChange={newTimeRange => {
-                    this.setState({ timeRange: newTimeRange }, this.updateQueryParams)
-
+                    this.setState({ timeRange: newTimeRange })
                   }}
                   defaultValue={this.defaultTimeRange}>
                 </RangePicker>
@@ -158,7 +123,7 @@ export default class App extends Component {
                   defaultValue={this.defaultMinReacts}
                   onAfterChange={newMinReacts => {
                     if (this.state.minReacts !== newMinReacts) {
-                      this.setState({ minReacts: newMinReacts }, this.updateQueryParams)
+                      this.setState({ minReacts: newMinReacts })
                     }
                   }}
                 />
@@ -168,7 +133,17 @@ export default class App extends Component {
         </Col>
         <Col span={14} style={{ height: "100%" }}>
           <PostFeed
-            queryParams={{ sources, timeRange, minReacts, textFilter, commented, tagged }}
+            queryParams={
+              (({ sources, timeRange, minReacts, textFilter, nameFilter, commented, tagged }) => ({
+                sources: JSON.stringify(sources),
+                timeRange: timeRange.map(date => date.valueOf()),
+                minReacts: minReacts,
+                textFilter: textFilter,
+                nameFilter: nameFilter,
+                commented: commented,
+                tagged: tagged
+              }))(this.state)
+            }
           />
         </Col>
       </Row >

@@ -16,7 +16,6 @@ const StyledSpan = styled.span`
 
 export default class NameTypeSelector extends React.Component {
 
-
     render() {
         return (
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', marginTop: '5px' }}>

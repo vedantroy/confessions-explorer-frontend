@@ -19,9 +19,10 @@ class PostFeed extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        console.log(prevProps.queryParams)
         if (prevProps.queryParams !== this.props.queryParams) {
             console.log("Query Params Updated--Resetting Page")
-            this.hasMore = true
+            this.hassMore = true
             this.index = 0
             this.setState({
                 confessions: []
