@@ -44,7 +44,6 @@ class PostFeed extends Component {
                 console.log("Failed to fetch data:")
                 console.log(error)
             })
-        console.log(confessions)
         //Server sends confessions in batches of 10. If the batch is less than 10,
         //the server is out
         confessions.map(confession => confession.time = moment.unix(confession.time).format("MM-DD-YYYY"))

@@ -120,6 +120,7 @@ export default class App extends Component {
               <div>
                 <Caption>Reactions</Caption>
                 <Slider
+                  max={1000}
                   defaultValue={this.state.minReacts}
                   onAfterChange={newMinReacts => {
                     if (this.state.minReacts !== newMinReacts) {
