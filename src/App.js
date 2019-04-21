@@ -114,13 +114,13 @@ export default class App extends Component {
                   onChange={newTimeRange => {
                     this.setState({ timeRange: newTimeRange })
                   }}
-                  defaultValue={this.defaultTimeRange}>
+                  defaultValue={this.state.timeRange}>
                 </RangePicker>
               </div>
               <div>
                 <Caption>Reactions</Caption>
                 <Slider
-                  defaultValue={this.defaultMinReacts}
+                  defaultValue={this.state.minReacts}
                   onAfterChange={newMinReacts => {
                     if (this.state.minReacts !== newMinReacts) {
                       this.setState({ minReacts: newMinReacts })
