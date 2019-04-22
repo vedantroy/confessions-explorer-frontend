@@ -5,7 +5,7 @@ import MaterialIcon from 'material-icons-react'
 
 
 const Confession = props => (
-    <UnstyledLink
+    <DestyledLink
         href={`http://facebook.com/${props.confessionId}`}
         rel={"noopener noreferrer"}
         target={"_blank"}>
@@ -31,7 +31,7 @@ const Confession = props => (
                 {props.text}
             </WordWrappedParagraph>
         </StyledConfession>
-    </UnstyledLink>
+    </DestyledLink>
 )
 
 export default Confession
@@ -43,7 +43,7 @@ const WordWrappedParagraph = styled.p`
     hyphens: auto;
 `
 
-const UnstyledLink = styled.a`
+const DestyledLink = styled.a`
     color: inherit;
     text-decoration: none;
 `

@@ -3,7 +3,7 @@ import moment from "moment";
 import "./App.css";
 import { Row, Col, Slider, DatePicker } from 'antd';
 import styled from 'styled-components'
-import { avenirNext, Caption } from "./components/base/BaseComponents";
+import { avenirNext, Caption, StyledSpan } from "./components/base/BaseComponents";
 import SourceSearch from "./components/menu/SourceSearch";
 import SourceDisplay from "./components/menu/SourceDisplay";
 import TextSearch from './components/menu/TextSearch'
@@ -34,6 +34,15 @@ const SettingsPanel = styled.div`
   background: #F1F3F8;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+`
+
+const HoverLink = styled(StyledSpan)`
+  font-size: 13px;
+  padding-top: 1vh;
+  transition: 0.3s;
+  &:hover {
+    color: rgb(90, 46, 255);
+  }
 `
 
 export default class App extends Component {
@@ -131,6 +140,13 @@ export default class App extends Component {
               </div>
             </SettingsPanel>
           </div>
+          <a
+            href="http://hacklodge.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}>
+            <HoverLink style={{ fontSize: '13px', paddingTop: '1vh' }}>Built at Hacklodge</HoverLink>
+          </a>
         </Col>
         <Col span={14} style={{ height: "100%" }}>
           <PostFeed

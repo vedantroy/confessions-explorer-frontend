@@ -91,3 +91,15 @@ export const StyledInput = styled.input`
 export const ShadowSearchbox = styled(StyledInput)`
     ${menuShadow}
 `
+
+export const StyledSpan = styled.span`
+    text-transform: uppercase;
+    font-size: 11px;
+    font-family: "DIN";
+    font-weight: bolder;
+    color: rgb(148, 157, 170);
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+`
