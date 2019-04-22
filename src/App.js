@@ -41,8 +41,8 @@ export default class App extends Component {
   state = {
     suggestions: ["MIT Summer Confessions"],
     sources: ["MIT Confessions"],
-    timeRange: [moment().subtract(2, "years"), moment()],
-    minReacts: 20,
+    timeRange: [moment([2013]), moment()],
+    minReacts: 0,
     textFilter: "",
     nameFilter: "",
     commented: true,
