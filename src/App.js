@@ -52,7 +52,7 @@ export default class App extends Component {
     sources: ["MIT Confessions"],
     timeRange: [moment([2013]), moment()],
     minReacts: 0,
-    textFilter: "",
+    searchPhrase: "",
     nameFilter: "",
     commented: true,
     tagged: true,
@@ -91,7 +91,7 @@ export default class App extends Component {
                 <TextSearch
                   onSubmit={value => {
                     this.setState({
-                      textFilter: value
+                      searchPhrase: value
                     })
                   }}
                 />
@@ -152,16 +152,11 @@ export default class App extends Component {
         </Col>
         <Col span={14} style={{ height: "100%" }}>
           <PostFeed
-            queryParams={
-              (({ sources, timeRange, minReacts, textFilter, nameFilter, commented, tagged }) => ({
-                sources: JSON.stringify(sources),
-                //TODO: Round, don't truncate?
-                timeRange: JSON.stringify(timeRange.map(date => Math.trunc((date.valueOf() / 1000)))),
-                minReacts: minReacts,
-                textFilter: textFilter,
-                nameFilter: nameFilter,
-                commented: commented,
-                tagged: tagged
+            queryParams={(
+              ({sources, suggestions, ...slimmedState}) => ({
+                  ...slimmedState,
+                  timeRange: JSON.stringify(slimmedState.timeRange.map(date => Math.trunc((date.valueOf() / 1000)))),
+                  name: slimmedState.nameFilter
               }))(this.state)
             }
           />
