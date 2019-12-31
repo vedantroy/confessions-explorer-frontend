@@ -96,6 +96,7 @@ export default class App extends Component {
                   }}
                 />
               </div>
+              {/*
               <SourceSearch
                 items={this.state.suggestions}
                 onValueSelected={chosenValue => {
@@ -117,6 +118,7 @@ export default class App extends Component {
                   })
                 }}
               />
+              */}
               <div>
                 <Caption>Date Range</Caption>
                 <RangePicker
@@ -153,7 +155,8 @@ export default class App extends Component {
             queryParams={
               (({ sources, timeRange, minReacts, textFilter, nameFilter, commented, tagged }) => ({
                 sources: JSON.stringify(sources),
-                timeRange: timeRange.map(date => date.valueOf()),
+                //TODO: Round, don't truncate?
+                timeRange: JSON.stringify(timeRange.map(date => Math.trunc((date.valueOf() / 1000)))),
                 minReacts: minReacts,
                 textFilter: textFilter,
                 nameFilter: nameFilter,

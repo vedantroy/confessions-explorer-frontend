@@ -23,7 +23,7 @@ const Confession = props => (
                     </StyledInfo>
                     <StyledMaterialIcon icon="person" />
                     <StyledInfo>
-                        {props.reacts}
+                        {props.reacts.Total}
                     </StyledInfo>
                 </Row>
             </Header>

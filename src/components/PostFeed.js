@@ -19,7 +19,6 @@ class PostFeed extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(prevProps.queryParams)
         if (prevProps.queryParams !== this.props.queryParams) {
             console.log("Query Params Updated--Resetting Page")
             this.hasMore = true
@@ -34,18 +33,28 @@ class PostFeed extends Component {
 
     async appendNextPosts() {
         this.isLoading = true
-        const url = new URL("https://api.confs.app/confessions")
-        url.search = new URLSearchParams({ ...this.props.queryParams, index: this.index })
+        //const url = new URL("https://api.confs.app/confessions")
+        const url = new URL('https://api.confs.app/confessions')
+        url.search = new URLSearchParams({...this.props.queryParams, index: this.index })
 
-        const confessions = await fetch(url)
+        let confessions = await fetch(url)
             .then(result => result.json())
             .catch(error => {
                 console.log("Failed to fetch data:")
                 console.log(error)
             })
+            
         //Server sends confessions in batches of 10. If the batch is less than 10,
         //the server is out
-        confessions.map(confession => confession.time = moment.unix(confession.time).format("MM-DD-YYYY"))
+        confessions = confessions.map(confession => {
+            const {fb_id, text, time, ...reacts} = confession
+            return {
+                fb_id,
+                text, 
+                time: moment.unix(confession.time).format('MM-DD-YYYY'),
+                reacts
+            }
+        })
         if (confessions.length < 10) {
             this.hasMore = false
         }
@@ -86,9 +95,9 @@ class PostFeed extends Component {
                             key={confession.fb_id}
                             source={confession.group}
                             date={confession.time}
-                            reacts={confession.reacts.Total}
                             text={confession.text}
-                            confessionId={confession.fb_id} />
+                            confessionId={confession.fb_id}
+                            reacts={confession.reacts} />
                     ))
                 }
             </div>
