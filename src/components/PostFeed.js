@@ -33,7 +33,6 @@ class PostFeed extends Component {
     async appendNextPosts() {
         this.isLoading = true
         //const url = new URL("https://api.confs.app/confessions")
-        console.log(this.props.queryParams)
         const prodURL = 'https://api.confs.app/confessions'
         const devURL = 'http://localhost:8000/confessions'
         const url = new URL(prodURL)
