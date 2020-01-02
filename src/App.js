@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import moment from "moment";
+//import moment from "moment";
+import dayjs from 'dayjs'
 import "./App.css";
 import { Row, Col, Slider, DatePicker } from 'antd';
 import styled from 'styled-components'
@@ -50,7 +51,7 @@ export default class App extends Component {
   state = {
     suggestions: ["MIT Summer Confessions"],
     sources: ["MIT Confessions"],
-    timeRange: [moment([2013]), moment()],
+    timeRange: [dayjs(new Date('2013', '00', '01')), dayjs()],
     minReacts: 0,
     searchPhrase: "",
     nameFilter: "",
@@ -68,7 +69,7 @@ export default class App extends Component {
             <SettingsHeader>Search</SettingsHeader>
             <SettingsPanel>
               <div>
-                <Caption>Name</Caption>
+                <Caption>Name (Enter to Submit)</Caption>
                 <div>
                   <NameSearch
                     onSubmit={name => {
@@ -87,7 +88,7 @@ export default class App extends Component {
                 </div>
               </div>
               <div>
-                <Caption>Included Text</Caption>
+                <Caption>Included Text (Enter to Submit)</Caption>
                 <TextSearch
                   onSubmit={value => {
                     this.setState({

@@ -7,6 +7,7 @@ export default class TextSearch extends React.Component {
         return (
             <ShadowSearchbox
                 ref={ref => this.inputElement = ref}
+                // TODO: Use debouncer, to refresh query after certain amount of time OR enter key press
                 onKeyPress={this.onKeyPress}
             />
         )

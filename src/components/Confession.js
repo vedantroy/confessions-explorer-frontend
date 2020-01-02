@@ -41,6 +41,7 @@ const WordWrappedParagraph = styled.p`
     word-wrap: break-word;
     word-break: break-word;
     hyphens: auto;
+    white-space: pre-wrap;
 `
 
 const DestyledLink = styled.a`

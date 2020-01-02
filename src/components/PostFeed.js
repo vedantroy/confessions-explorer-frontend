@@ -20,7 +20,6 @@ class PostFeed extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.queryParams !== this.props.queryParams) {
-            console.log("Query Params Updated--Resetting Page")
             this.hasMore = true
             this.index = 0
             this.setState({
@@ -34,7 +33,10 @@ class PostFeed extends Component {
     async appendNextPosts() {
         this.isLoading = true
         //const url = new URL("https://api.confs.app/confessions")
-        const url = new URL('https://api.confs.app/confessions')
+        console.log(this.props.queryParams)
+        const prodURL = 'https://api.confs.app/confessions'
+        const devURL = 'http://localhost:8000/confessions'
+        const url = new URL(prodURL)
         url.search = new URLSearchParams({...this.props.queryParams, index: this.index })
 
         let confessions = await fetch(url)

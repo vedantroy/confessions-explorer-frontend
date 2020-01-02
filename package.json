@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "antd": "^3.14.1",
+    "antd-dayjs-webpack-plugin": "0.0.7",
     "babel-plugin-import": "^1.11.0",
     "customize-cra": "^0.2.12",
+    "dayjs": "^1.8.18",
     "downshift": "^3.2.6",
     "material-icons-react": "^1.0.4",
     "react": "^16.8.3",
