@@ -143,6 +143,7 @@ export default class App extends Component {
               </div>
             </SettingsPanel>
           </div>
+          {/*
           <a
             href="http://hacklodge.org/"
             target="_blank"
@@ -150,6 +151,7 @@ export default class App extends Component {
             style={{ textDecoration: 'none' }}>
             <HoverLink style={{ fontSize: '13px', paddingTop: '1vh' }}>Built at Hacklodge</HoverLink>
           </a>
+          */}
         </Col>
         <Col span={14} style={{ height: "100%" }}>
           <PostFeed
