@@ -24,22 +24,26 @@ Modal.defaultStyles.content = {
 };
 
 const StyledButton = styled.div`
-  color: #fff;
-  text-align: center;
-  cursor: pointer;
-  line-height: 35px;
-  height: 35px;
-  border-radius: 6px;
-  padding: 0 20px;
-  -webkit-transition: all 0.4s;
-  transition: all 0.4s;
-  box-shadow: 0 0 20px rgba(193, 213, 224, 0.55);
-  background: #f5222d;
-  text-transform: uppercase;
-  font-weight: bold;
-  ${DIN_FONT}
-  background: ${PURPLE_VALUE}
-  width: 120px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    line-height: 35px;
+    height: 35px;
+    border-radius: 6px;
+    padding: 0 20px;
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+    background: #f5222d;
+    text-transform: uppercase;
+    font-weight: bold;
+    ${DIN_FONT}
+    background: ${PURPLE_VALUE}
+    width: 120px;
+    box-shadow: rgba(193, 213, 224, 0.35) 0px 0px 40px;
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(193, 213, 224, 0.75);
+    }
   }
 `;
 
@@ -98,7 +102,14 @@ export default class App extends Component {
           paddingRight: "20px",
           paddingTop: "20px"
         }}
-        queryParams={(({ sources, suggestions, ...slimmedState }) => ({
+        // Be sure to ignore ALL values in state that aren't necessary for query params.
+        // Otherwise, there will be unecessary re-renders/API requests
+        queryParams={(({
+          sources,
+          suggestions,
+          modalOpen,
+          ...slimmedState
+        }) => ({
           ...slimmedState,
           timeRange: JSON.stringify(
             slimmedState.timeRange.map(date =>
