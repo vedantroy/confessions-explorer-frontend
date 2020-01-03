@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {DebounceInput} from 'react-debounce-input'
 import React from "react";
 import { DatePicker, Slider } from "antd";
 import {
@@ -45,6 +46,17 @@ const HoverLink = styled(StyledSpan)`
   }
 `;
 
+const withDebounce = (Component, defaultValue, onChange) => (
+  <DebounceInput
+    value={defaultValue}
+    minLength={1}
+    debounceTimeout={500}
+    onChange={e => onChange(e.target.value)}
+    forceNotifyByEnter={true}
+    element={Component}>
+  </DebounceInput>
+)
+
 const SettingsMenu = ({
   name,
   onNameChange,
@@ -71,7 +83,9 @@ const SettingsMenu = ({
       <div>
         <Caption>Name (Enter to Refresh)</Caption>
         <div>
-          <NameSearch defaultValue={name} onSubmit={onNameChange} />
+          {
+            withDebounce(NameSearch, name, onNameChange)
+          }
           <NameTypeSelector
             includeCommenters={includeCommenters}
             includeTagged={includeTagged}
@@ -81,10 +95,9 @@ const SettingsMenu = ({
       </div>
       <div>
         <Caption>Included Text (Enter to Refresh)</Caption>
-        <TextSearch
-          defaultValue={searchPhrase}
-          onSubmit={onSearchPhraseChange}
-        />
+        {
+            withDebounce(TextSearch, searchPhrase, onSearchPhraseChange)
+        }
       </div>
       <div>
         <Caption>Date Range</Caption>
