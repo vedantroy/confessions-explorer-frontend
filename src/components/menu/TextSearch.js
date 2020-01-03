@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShadowSearchbox } from '../base/BaseComponents'
+import { ShadowSearchbox } from './../BaseComponents'
 
 
 export default class TextSearch extends React.Component {
@@ -9,6 +9,7 @@ export default class TextSearch extends React.Component {
                 ref={ref => this.inputElement = ref}
                 // TODO: Use debouncer, to refresh query after certain amount of time OR enter key press
                 onKeyPress={this.onKeyPress}
+                defaultValue={this.props.defaultValue}
             />
         )
     }

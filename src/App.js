@@ -1,170 +1,166 @@
-import React, { Component } from "react";
-//import moment from "moment";
-import dayjs from 'dayjs'
+import React, { Component, Fragment } from "react";
+import Modal from "react-modal";
+import dayjs from "dayjs";
+import Media from "react-media";
 import "./App.css";
-import { Row, Col, Slider, DatePicker } from 'antd';
-import styled from 'styled-components'
-import { avenirNext, Caption, StyledSpan } from "./components/base/BaseComponents";
-import SourceSearch from "./components/menu/SourceSearch";
-import SourceDisplay from "./components/menu/SourceDisplay";
-import TextSearch from './components/menu/TextSearch'
+import { Row, Col } from "antd";
+import styled from "styled-components";
+import { DIN_FONT, PURPLE_VALUE } from "./components/BaseComponents";
 import PostFeed from "./components/PostFeed";
-import NameTypeSelector from "./components/menu/NameType";
-import NameSearch from "./components/menu/NameSearch";
-const { RangePicker } = DatePicker
+import SettingsMenu from "./components/menu/SettingsMenu";
 
-const SettingsHeader = styled.div`
-  height: 64px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  line-height: 64px;
-  text-align: center;
-  vertical-align: middle;
-  background: #141d24;
-  ${avenirNext}
+Modal.setAppElement("#root");
+Modal.defaultStyles.content = {
+  position: "absolute",
+  top: "40px",
+  left: "40px",
+  right: "40px",
+  bottom: "40px",
+  overflow: "auto",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "space-around"
+};
+
+const StyledButton = styled.div`
   color: #fff;
-  font-size: 24px;
-`
-const SettingsPanel = styled.div`
-  height: 50vh;
-  min-height: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 20px;
-  background: #F1F3F8;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-`
-
-const HoverLink = styled(StyledSpan)`
-  font-size: 13px;
-  padding-top: 1vh;
-  transition: 0.3s;
-  &:hover {
-    color: rgb(90, 46, 255);
+  text-align: center;
+  cursor: pointer;
+  line-height: 35px;
+  height: 35px;
+  border-radius: 6px;
+  padding: 0 20px;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  box-shadow: 0 0 20px rgba(193, 213, 224, 0.55);
+  background: #f5222d;
+  text-transform: uppercase;
+  font-weight: bold;
+  ${DIN_FONT}
+  background: ${PURPLE_VALUE}
+  width: 120px;
   }
-`
+`;
 
 export default class App extends Component {
-
   state = {
-    suggestions: ["MIT Summer Confessions"],
-    sources: ["MIT Confessions"],
-    timeRange: [dayjs(new Date('2013', '00', '01')), dayjs()],
+    //suggestions: ["MIT Summer Confessions"],
+    //sources: ["MIT Confessions"],
+    timeRange: [dayjs(new Date("2013", "00", "01")), dayjs()],
     minReacts: 0,
     searchPhrase: "",
     nameFilter: "",
     commented: true,
     tagged: true,
-  }
+    modalOpen: false
+  };
 
   render() {
+    const SettingsInstance = (
+      <SettingsMenu
+        name={this.state.nameFilter}
+        onNameChange={name => {
+          this.setState({ nameFilter: name });
+        }}
+        onNameTypeChange={type => {
+          this.setState({
+            [type]: !this.state[type]
+          });
+        }}
+        includeCommenters={this.state.commented}
+        includeTagged={this.state.tagged}
+        searchPhrase={this.state.searchPhrase}
+        onSearchPhraseChange={value => {
+          this.setState({
+            searchPhrase: value
+          });
+        }}
+        timeRange={this.state.timeRange}
+        onTimeRangeChange={newTimeRange => {
+          this.setState({ timeRange: newTimeRange });
+        }}
+        minReacts={this.state.minReacts}
+        onReactsChange={newMinReacts => {
+          if (this.state.minReacts !== newMinReacts) {
+            this.setState({ minReacts: newMinReacts });
+          }
+        }}
+      />
+    );
 
-    //Can syntax be simplified? E.g - { timeRange } instead of {timeRange: timeRange}?
+    const PostFeedInstance = (
+      <PostFeed
+        style={{
+          height: "100%",
+          overflow: "auto",
+          paddingLeft: "20px",
+          paddingRight: "20px",
+          paddingTop: "20px"
+        }}
+        queryParams={(({ sources, suggestions, ...slimmedState }) => ({
+          ...slimmedState,
+          timeRange: JSON.stringify(
+            slimmedState.timeRange.map(date =>
+              Math.trunc(date.valueOf() / 1000)
+            )
+          ),
+          name: slimmedState.nameFilter
+        }))(this.state)}
+      ></PostFeed>
+    );
+
     return (
-      <Row style={{ height: "100%" }}>
-        <Col span={10} style={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "0px 15px" }}>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", maxWidth: "400px" }}>
-            <SettingsHeader>Search</SettingsHeader>
-            <SettingsPanel>
-              <div>
-                <Caption>Name (Enter to Submit)</Caption>
-                <div>
-                  <NameSearch
-                    onSubmit={name => {
-                      this.setState({ nameFilter: name })
-                    }}
-                  />
-                  <NameTypeSelector
-                    /* don't change the commented/tagged keys in the state object unless you also
-                    change the values that are passed into onChange in NameSearch */
-                    onChange={type => {
-                      this.setState({
-                        [type]: !this.state[type]
-                      })
-                    }}
-                  />
-                </div>
-              </div>
-              <div>
-                <Caption>Included Text (Enter to Submit)</Caption>
-                <TextSearch
-                  onSubmit={value => {
-                    this.setState({
-                      searchPhrase: value
-                    })
-                  }}
-                />
-              </div>
-              {/*
-              <SourceSearch
-                items={this.state.suggestions}
-                onValueSelected={chosenValue => {
-                  const newSuggestions = this.state.suggestions.filter(item => item !== chosenValue)
-                  const newSources = this.state.sources.concat(chosenValue)
-                  this.setState({
-                    suggestions: newSuggestions,
-                    sources: newSources,
-                  })
+      <Media
+        queries={{
+          small: { maxWidth: 549 }
+        }}
+      >
+        {matches =>
+          matches.small ? (
+            <Fragment>
+              <a
+                style={{
+                  textDecoration: "none",
+                  position: "fixed",
+                  top: "15px",
+                  left: "15px",
+                  zIndex: "2",
+                  userSelect: "none"
                 }}
-
-              />
-              <SourceDisplay
-                sources={this.state.sources}
-                onRemove={removedSource => {
+                onClick={() => {
                   this.setState({
-                    suggestions: this.state.suggestions.concat(removedSource),
-                    sources: this.state.sources.filter(source => source !== removedSource)
-                  })
+                    modalOpen: !this.state.modalOpen
+                  });
                 }}
-              />
-              */}
-              <div>
-                <Caption>Date Range</Caption>
-                <RangePicker
-                  onChange={newTimeRange => {
-                    this.setState({ timeRange: newTimeRange })
-                  }}
-                  defaultValue={this.state.timeRange}>
-                </RangePicker>
-              </div>
-              <div>
-                <Caption>Reactions</Caption>
-                <Slider
-                  max={1000}
-                  defaultValue={this.state.minReacts}
-                  onAfterChange={newMinReacts => {
-                    if (this.state.minReacts !== newMinReacts) {
-                      this.setState({ minReacts: newMinReacts })
-                    }
-                  }}
-                />
-              </div>
-            </SettingsPanel>
-          </div>
-          {/*
-          <a
-            href="http://hacklodge.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: 'none' }}>
-            <HoverLink style={{ fontSize: '13px', paddingTop: '1vh' }}>Built at Hacklodge</HoverLink>
-          </a>
-          */}
-        </Col>
-        <Col span={14} style={{ height: "100%" }}>
-          <PostFeed
-            queryParams={(
-              ({sources, suggestions, ...slimmedState}) => ({
-                  ...slimmedState,
-                  timeRange: JSON.stringify(slimmedState.timeRange.map(date => Math.trunc((date.valueOf() / 1000)))),
-                  name: slimmedState.nameFilter
-              }))(this.state)
-            }
-          />
-        </Col>
-      </Row >
-    )
+              >
+                <StyledButton>Settings</StyledButton>
+              </a>
+              <Modal isOpen={this.state.modalOpen}>{SettingsInstance}</Modal>
+              {PostFeedInstance}
+            </Fragment>
+          ) : (
+            <Row style={{ height: "100%" }}>
+              <Col
+                span={10}
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "0px 15px"
+                }}
+              >
+                {SettingsInstance}
+              </Col>
+              <Col span={14} style={{ height: "100%" }}>
+                {PostFeedInstance}
+              </Col>
+            </Row>
+          )
+        }
+      </Media>
+    );
   }
 }

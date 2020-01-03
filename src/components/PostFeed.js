@@ -4,6 +4,7 @@ import moment from 'moment'
 
 class PostFeed extends Component {
 
+    mounted = undefined
     containerElement = null
 
     isLoading = false
@@ -15,6 +16,7 @@ class PostFeed extends Component {
     }
 
     componentDidMount() {
+        this.mounted = true
         this.appendNextPosts()
     }
 
@@ -30,21 +32,26 @@ class PostFeed extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.mounted = false
+    }
+
     async appendNextPosts() {
         this.isLoading = true
         //const url = new URL("https://api.confs.app/confessions")
         const prodURL = 'https://api.confs.app/confessions'
         const devURL = 'http://localhost:8000/confessions'
-        const url = new URL(prodURL)
+        const url = new URL(devURL)
         url.search = new URLSearchParams({...this.props.queryParams, index: this.index })
 
+        
         let confessions = await fetch(url)
             .then(result => result.json())
             .catch(error => {
                 console.log("Failed to fetch data:")
                 console.log(error)
             })
-            
+                    
         //Server sends confessions in batches of 10. If the batch is less than 10,
         //the server is out
         confessions = confessions.map(confession => {
@@ -62,6 +69,10 @@ class PostFeed extends Component {
         this.index += 1
 
         this.isLoading = false
+        // Don't set state after unmount. Prevents memory leak.
+        if (!this.mounted) {
+            return
+        }
         this.setState(prevState => ({
             confessions: prevState.confessions.concat(confessions),
         }), () => {
@@ -78,9 +89,10 @@ class PostFeed extends Component {
     }
 
     render() {
+        //console.log(this.props.queryParams)
         return (
             <div
-                style={{ height: "100%", overflow: "auto", padding: "0px 20px" }}
+                style={this.props.style}
                 onScroll={() => {
                     if (this.containerElement.clientHeight + this.containerElement.scrollTop >= this.containerElement.scrollHeight - (this.containerElement.clientHeight / 5)) {
                         if (!this.isLoading && this.hasMore) {

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { StaticVerticalItems, DIN_FONT, border, menuShadow } from '../base/BaseComponents'
+import { StaticVerticalItems, DIN_FONT, border, menuShadow } from './../BaseComponents'
 import { Icon } from 'antd'
 
 const Suggestions = styled(StaticVerticalItems)`

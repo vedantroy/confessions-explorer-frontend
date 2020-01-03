@@ -44,6 +44,8 @@ export const DIN_FONT = css`
   font-family: "DIN";
 `
 
+export const PURPLE_VALUE = '#5a2eff';
+
 export const dinCSS = css`
   text-transform: uppercase;
   font-size: 11px;

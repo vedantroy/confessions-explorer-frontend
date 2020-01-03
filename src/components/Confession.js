@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components'
-import { Row, oneLine, mediumPadding, avenirNext, BetweenRow } from './base/BaseComponents'
+import { Row, oneLine, mediumPadding, avenirNext, BetweenRow } from './BaseComponents'
 import MaterialIcon from 'material-icons-react'
 
 

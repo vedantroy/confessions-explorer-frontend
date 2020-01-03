@@ -1,6 +1,6 @@
 import React from 'react'
 import Downshift from 'downshift'
-import { Caption, menuShadow, DIN_FONT, StaticVerticalItems, VerticalItem, sideBarHighlightTextColor, StyledInput } from '../base/BaseComponents'
+import { Caption, menuShadow, DIN_FONT, StaticVerticalItems, VerticalItem, sideBarHighlightTextColor, StyledInput } from '../BaseComponents'
 import styled from 'styled-components'
 
 const Container = styled.div`
