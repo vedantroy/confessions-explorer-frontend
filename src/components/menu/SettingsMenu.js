@@ -1,14 +1,10 @@
 import styled from "styled-components";
 import React from "react";
 import { DatePicker, Slider } from "antd";
-import {
-  avenirNext,
-  Caption,
-  StyledSpan
-} from "./../BaseComponents";
-import TextSearch from "./TextSearch";
+import { avenirNext, Caption, StyledSpan } from "./../BaseComponents";
+import SearchBox from "./SearchBox";
 import NameTypeSelector from "./NameType";
-import NameSearch from "./NameSearch";
+import Search from "antd/lib/input/Search";
 const { RangePicker } = DatePicker;
 
 const SettingsHeader = styled.div`
@@ -69,9 +65,9 @@ const SettingsMenu = ({
     <SettingsHeader>Search</SettingsHeader>
     <SettingsPanel>
       <div>
-        <Caption>Name (Enter to Refresh)</Caption>
+        <Caption>Name</Caption>
         <div>
-          <NameSearch defaultValue={name} onSubmit={onNameChange} />
+          <SearchBox defaultValue={name} onSubmit={onNameChange} />
           <NameTypeSelector
             includeCommenters={includeCommenters}
             includeTagged={includeTagged}
@@ -80,8 +76,8 @@ const SettingsMenu = ({
         </div>
       </div>
       <div>
-        <Caption>Included Text (Enter to Refresh)</Caption>
-        <TextSearch
+        <Caption>Included Text</Caption>
+        <SearchBox
           defaultValue={searchPhrase}
           onSubmit={onSearchPhraseChange}
         />
