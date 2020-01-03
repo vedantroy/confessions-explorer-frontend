@@ -4,10 +4,7 @@ import { DatePicker, Slider } from "antd";
 import {
   avenirNext,
   Caption,
-  StyledSpan,
-  DIN_FONT,
-  PURPLE_VALUE,
-  dinCSS
+  StyledSpan
 } from "./../BaseComponents";
 import TextSearch from "./TextSearch";
 import NameTypeSelector from "./NameType";

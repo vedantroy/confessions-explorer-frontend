@@ -44,7 +44,7 @@ class PostFeed extends Component {
     //const url = new URL("https://api.confs.app/confessions")
     const prodURL = "https://api.confs.app/confessions";
     const devURL = "http://localhost:8000/confessions";
-    const url = new URL(devURL);
+    const url = new URL(prodURL);
     url.search = new URLSearchParams({
       ...this.props.queryParams,
       index: this.index
