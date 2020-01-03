@@ -145,7 +145,7 @@ export default class App extends Component {
                   });
                 }}
               >
-                <StyledButton>Settings</StyledButton>
+                <StyledButton>Search</StyledButton>
               </a>
               <Modal isOpen={this.state.modalOpen}>{SettingsInstance}</Modal>
               {PostFeedInstance}

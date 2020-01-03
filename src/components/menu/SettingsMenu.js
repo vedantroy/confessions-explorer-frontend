@@ -69,7 +69,7 @@ const SettingsMenu = ({
     <SettingsHeader>Search</SettingsHeader>
     <SettingsPanel>
       <div>
-        <Caption>Name (Enter to Submit)</Caption>
+        <Caption>Name (Enter to Refresh)</Caption>
         <div>
           <NameSearch defaultValue={name} onSubmit={onNameChange} />
           <NameTypeSelector
@@ -80,7 +80,7 @@ const SettingsMenu = ({
         </div>
       </div>
       <div>
-        <Caption>Included Text (Enter to Submit)</Caption>
+        <Caption>Included Text (Enter to Refresh)</Caption>
         <TextSearch
           defaultValue={searchPhrase}
           onSubmit={onSearchPhraseChange}
